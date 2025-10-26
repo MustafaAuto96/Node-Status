@@ -1,0 +1,5 @@
+{
+  "name": "Node Status Processor",
+  "description": "An application to process and visualize network node statuses from an Excel file, by filtering nodes by prefix, determining status from packet loss, and generating a report and visual snapshot.",
+  "requestFramePermissions": []
+}
