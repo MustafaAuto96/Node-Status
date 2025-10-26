@@ -81,21 +81,29 @@ interface SnapshotViewProps {
     data: NodeData[] | null;
 }
 
-const SnapshotView: React.FC<SnapshotViewProps> = ({ data }) => (
-    <div className="bg-gray-800 p-6 rounded-lg border border-gray-700">
-        <h3 className="text-lg font-semibold text-white mb-4 text-center">Node Status</h3>
-        <div className="space-y-2">
-            {data?.map((row, index) => (
-                <div key={index} className="flex justify-between items-center bg-gray-700/50 p-2 rounded-md">
-                    <span className="font-mono text-sm text-gray-300">{row.Node}</span>
-                    <span className={`px-3 py-1 rounded-full text-xs font-bold ${row.Status === 'UP' ? 'bg-green-500 text-black' : 'bg-red-500 text-white'}`}>
-                        {row.Status}
-                    </span>
-                </div>
-            ))}
+const SnapshotView: React.FC<SnapshotViewProps> = ({ data }) => {
+    const downNodes = data?.filter(node => node.Status === 'DOWN') || [];
+
+    return (
+        <div className="bg-gray-800 p-6 rounded-lg border border-gray-700">
+            <h3 className="text-lg font-semibold text-white mb-4 text-center">Down Nodes Status</h3>
+            <div className="space-y-2">
+                {downNodes.length > 0 ? (
+                    downNodes.map((row, index) => (
+                        <div key={index} className="flex justify-between items-center bg-gray-700/50 p-2 rounded-md">
+                            <span className="font-mono text-sm text-gray-300">{row.Node}</span>
+                            <span className="px-3 py-1 rounded-full text-xs font-bold bg-red-500 text-white">
+                                {row.Status}
+                            </span>
+                        </div>
+                    ))
+                ) : (
+                    <p className="text-center text-gray-400 py-4">No down nodes found.</p>
+                )}
+            </div>
         </div>
-    </div>
-);
+    );
+};
 
 
 export default function App() {
